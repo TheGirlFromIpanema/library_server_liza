@@ -1,4 +1,4 @@
-import express, {Request, Response, NextFunction} from "express"
+import express, {Request, Response} from "express"
 import {BookController} from "../controllers/BookController.js";
 import {bookGenreQueryValidation, bookRemoveQueryValidation} from "../joiSchemas/bookSchema.js";
 import {HttpError} from "../errorHandler/HttpError.js";

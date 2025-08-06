@@ -61,7 +61,7 @@ export class BookController {
         const {error} = pickRemoveSchema.validate(body);
         if (error) throw new HttpError(400, error.message)
         this.libService.returnBook(body.id);
-        res.send("Book successfully removed");
+        res.send("Book successfully returned");
     }
 
 }

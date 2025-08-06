@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "a6279bfa-70d1-4016-8ab8-3a381f059831",
+		"name": "LibServer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43779836",
+		"_collection_link": "https://liza-2684853.postman.co/workspace/Java27-30-Liza~c740e4a4-daf0-448a-a051-c5a121012f8d/collection/43779836-a6279bfa-70d1-4016-8ab8-3a381f059831?action=share&source=collection_link&creator=43779836"
+	},
+	"item": [
+		{
+			"name": "AddBook",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": 1984,\r\n    \"author\": \"Orwell\",\r\n    \"genre\": \"distopya\"\r\n\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3900/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3900",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllBooks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3900/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3900",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PickUpBook",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reader\": \"Tom\",\r\n    \"id\": \"730fdba5-c800-43c5-a7a0-c8f1cd9222a8\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3900/api/books/pickUp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3900",
+					"path": [
+						"api",
+						"books",
+						"pickUp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBooksByGenre",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3900/api/books/genres?genre=dystopia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3900",
+					"path": [
+						"api",
+						"books",
+						"genres"
+					],
+					"query": [
+						{
+							"key": "genre",
+							"value": "dystopia"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReturnBook",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reader\": \"Tom\",\r\n    \"id\": \"730fdba5-c800-43c5-a7a0-c8f1cd9222a8\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3900/api/books/return",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3900",
+					"path": [
+						"api",
+						"books",
+						"return"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveBook",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3900/api/books?bookId=730fdba5-c800-43c5-a7a0-c8f1cd9222a8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3900",
+					"path": [
+						"api",
+						"books"
+					],
+					"query": [
+						{
+							"key": "bookId",
+							"value": "730fdba5-c800-43c5-a7a0-c8f1cd9222a8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddBook1",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"The Catcher in the Rye\",\r\n    \"author\": \"Salinger\",\r\n    \"genre\": \"classic\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3900/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3900",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
