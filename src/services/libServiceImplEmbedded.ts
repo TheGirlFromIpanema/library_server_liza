@@ -26,6 +26,8 @@ export class LibServiceImplEmbedded implements LibService {
     pickUpBook(id: string, reader: string): void {
         const index = this.books.findIndex(elem => elem.id === id);
         if (index !== -1) {
+            if (this.books[index].status === BookStatus.ON_HAND)
+                throw new HttpError(400, "Book already on hand");
             this.books[index].status = BookStatus.ON_HAND;
             const pickDate = new Date().toLocaleString("en-GB", {
                 timeZone: "Asia/Jerusalem",
@@ -53,6 +55,8 @@ export class LibServiceImplEmbedded implements LibService {
     returnBook(id: string): void {
         const index = this.books.findIndex(elem => elem.id === id);
         if (index !== -1) {
+            if (this.books[index].status === BookStatus.ON_STOCK)
+                throw new HttpError(400, "Book already on stock");
             this.books[index].status = BookStatus.ON_STOCK;
             this.books[index].pickList[this.books[index].pickList.length - 1].return_date = new Date().toLocaleString("en-GB", {
                 timeZone: "Asia/Jerusalem",

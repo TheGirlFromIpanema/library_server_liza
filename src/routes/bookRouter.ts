@@ -1,5 +1,7 @@
 import express, {Request, Response, NextFunction} from "express"
 import {BookController} from "../controllers/BookController.js";
+import {bookGenreQueryValidation, bookRemoveQueryValidation} from "../joiSchemas/bookSchema.js";
+import {HttpError} from "../errorHandler/HttpError.js";
 
 export const bookRouter = express.Router();
 
@@ -19,6 +21,8 @@ bookRouter.get("/", (req, res) => {
 })
 
 bookRouter.get('/genres', (req: Request, res: Response) => {
+    const {error} = bookGenreQueryValidation.validate(req.query);
+    if (error) throw new HttpError(400, error.message)
     bookController.getBooksByGenre(req,res)
 })
 
@@ -31,6 +35,8 @@ bookRouter.put("/return", (req: Request, res: Response) => {
 })
 
 bookRouter.delete("/", (req: Request, res: Response) => {
+    const {error} = bookRemoveQueryValidation.validate(req.query);
+    if (error) throw new HttpError(400, error.message)
     bookController.removeBook(req,res)
 })
 

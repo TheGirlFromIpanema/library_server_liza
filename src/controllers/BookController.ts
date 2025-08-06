@@ -4,11 +4,12 @@ import {Request, Response} from "express";
 import {Book, BookDto, BookGenres} from "../model/Book.ts";
 import {HttpError} from "../errorHandler/HttpError.ts";
 import {convertBookDtoToBook} from "../utils/tools.js";
+import {bookDtoSchema, pickRemoveSchema} from "../joiSchemas/bookSchema.js";
 
 
 export class BookController {
 
-    private libService:LibService = new LibServiceImplEmbedded();
+    private libService: LibService = new LibServiceImplEmbedded();
 
     getAllBooks(req: Request, res: Response) {
         const result = this.libService.getAllBooks();
@@ -17,23 +18,31 @@ export class BookController {
 
     addBook(req: Request, res: Response) {
         const dto = req.body as BookDto;
-        const book:Book = convertBookDtoToBook(dto);
+        if (!dto) throw new HttpError(409, 'Bad request: Missing Body!')
+        const {error} = bookDtoSchema.validate(dto);
+        if (error) throw new HttpError(400, error.message)
+        const book: Book = convertBookDtoToBook(dto);
         const result = this.libService.addBook(book);
         if (result) {
             res.status(201).json(book);
-        }
-        else
+        } else
             throw new HttpError(409, "Book not added")
     }
 
     getBooksByGenre(req: Request, res: Response) {
         const genre = req.query.genre as BookGenres;
+        const bookGenre = Object.values(BookGenres).find(v => v === genre)
+        if (!bookGenre)
+            throw new HttpError(400, "Wrong genre");
         const result = this.libService.getBooksByGenre(genre);
         return res.json(result);
     }
 
     pickUpBook(req: Request, res: Response) {
         const body = req.body;
+        if (!body) throw new HttpError(409, 'Bad request: Missing Body!')
+        const {error} = pickRemoveSchema.validate(body);
+        if (error) throw new HttpError(400, error.message)
         if (!body.reader)
             body.reader = "Anonym";
         this.libService.pickUpBook(body.id, body.reader);
@@ -48,7 +57,10 @@ export class BookController {
 
     returnBook(req: Request, res: Response) {
         const body = req.body;
-        this.libService.removeBook(body.id);
+        if (!body) throw new HttpError(409, 'Bad request: Missing Body!')
+        const {error} = pickRemoveSchema.validate(body);
+        if (error) throw new HttpError(400, error.message)
+        this.libService.returnBook(body.id);
         res.send("Book successfully removed");
     }
 
