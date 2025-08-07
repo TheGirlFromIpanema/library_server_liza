@@ -17,7 +17,12 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": 1984,\r\n    \"author\": \"Orwell\",\r\n    \"genre\": \"distopya\"\r\n\r\n}"
+					"raw": "{\r\n    \"title\": \"1984\",\r\n    \"author\": \"Orwell\",\r\n    \"genre\": \"dystopia\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:3900/api/books",
