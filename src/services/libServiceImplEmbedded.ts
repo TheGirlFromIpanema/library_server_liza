@@ -6,24 +6,24 @@ export class LibServiceImplEmbedded implements LibService {
 
     private books: Book[] = [];
 
-    addBook(book: Book): boolean {
+    async addBook(book: Book): Promise<boolean> {
         const index = this.books.findIndex((item: Book) => item.id === book.id);
         if (index === -1) {
             this.books.push(book);
-            return true;
+            return new Promise(resolve => resolve(true));
         }
-        return false;
+        return Promise.resolve(false);
     }
 
-    getAllBooks(): Book[] {
-        return [...this.books];
+    async getAllBooks(): Promise<Book[]> {
+        return Promise.resolve([...this.books]);
     }
 
-    getBooksByGenre(genre: BookGenres): Book[] {
-        return this.books.filter(book => book.genre === genre);
+    async getBooksByGenre(genre: BookGenres): Promise<Book[]> {
+        return Promise.resolve(this.books.filter(book => book.genre === genre));
     }
 
-    pickUpBook(id: string, reader: string): void {
+    async pickUpBook(id: string, reader: string): Promise<void> {
         const index = this.books.findIndex(elem => elem.id === id);
         if (index !== -1) {
             if (this.books[index].status === BookStatus.ON_HAND)
@@ -42,17 +42,17 @@ export class LibServiceImplEmbedded implements LibService {
         else throw new HttpError(400, "Book not found.");
     }
 
-    removeBook(id: string): Book {
+    async removeBook(id: string): Promise<Book> {
         const index = this.books.findIndex(elem => elem.id === id);
         if (index !== -1) {
             const temp = this.books[index];
             this.books.splice(index, 1);
-            return temp;
+            return Promise.resolve(temp);
         } else
             throw new HttpError(400, "Book not found");
     }
 
-    returnBook(id: string): void {
+    async returnBook(id: string): Promise<void> {
         const index = this.books.findIndex(elem => elem.id === id);
         if (index !== -1) {
             if (this.books[index].status === BookStatus.ON_STOCK)
