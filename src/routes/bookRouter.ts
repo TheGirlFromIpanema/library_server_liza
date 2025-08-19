@@ -41,7 +41,7 @@ bookRouter.delete("/", async(req: Request, res: Response) => {
 })
 
 bookRouter.get('/gen_st', async(req: Request, res: Response) => {
-    await bookController.getBooksByGengreAndStatus
+    await bookController.getBooksByGenreAndStatus(req,res)
 });
 
 

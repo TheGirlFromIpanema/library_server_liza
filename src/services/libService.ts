@@ -1,4 +1,4 @@
-import {Book, BookGenres} from "../model/Book.ts";
+import {Book, BookGenres, BookStatus} from "../model/Book.ts";
 
 export interface LibService {
     addBook: (book: Book) => Promise<boolean>;
@@ -7,4 +7,5 @@ export interface LibService {
     returnBook: (id: string) => Promise<void>;
     getAllBooks: () => Promise<Book[]>;
     getBooksByGenre:(genre:BookGenres) => Promise<Book[]>;
+    getBooksByGenreAndStatus:(genre:BookGenres, status:BookStatus) => Promise<Book[]>;
 }

@@ -222,6 +222,40 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GetBooksByGenreAndStatus",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3900/api/books/gen_st?genre=dystopia&status=on_stock",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3900",
+					"path": [
+						"api",
+						"books",
+						"gen_st"
+					],
+					"query": [
+						{
+							"key": "genre",
+							"value": "dystopia"
+						},
+						{
+							"key": "status",
+							"value": "on_stock"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

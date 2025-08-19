@@ -5,13 +5,15 @@ import {Book, BookDto, BookGenres} from "../model/Book.ts";
 import {HttpError} from "../errorHandler/HttpError.ts";
 import {convertBookDtoToBook, getStatus, getGenre} from "../utils/tools.js";
 import {bookDtoSchema, pickRemoveSchema} from "../joiSchemas/bookSchema.js";
-import {libServiceMongo as service} from "../services/libServiceImplMongo.js";
+//import {libServiceMongo as service} from "../services/libServiceImplMongo.js";
+import {libServiceSql as service} from "../services/libServiseImplSQL.js";
+
 
 export class BookController {
 
     // private libService: LibService = new LibServiceImplEmbedded();
 
-    async getBooksByGengreAndStatus(req: Request, res: Response) {
+    async getBooksByGenreAndStatus(req: Request, res: Response) {
         const {genre, status} = req.query;
         const genre_upd = getGenre(genre as string);
         const status_upd = getStatus(status as string);

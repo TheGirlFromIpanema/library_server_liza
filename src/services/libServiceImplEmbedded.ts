@@ -4,6 +4,7 @@ import {HttpError} from "../errorHandler/HttpError.js";
 
 export class LibServiceImplEmbedded implements LibService {
 
+
     private books: Book[] = [];
 
     async addBook(book: Book): Promise<boolean> {
@@ -65,6 +66,12 @@ export class LibServiceImplEmbedded implements LibService {
         }
         else throw new HttpError(400, "Book not found");
     }
+
+    getBooksByGenreAndStatus(genre: BookGenres, status: BookStatus): Promise<Book[]> {
+        return Promise.resolve([]);
+    }
+
+
 
 
 }
