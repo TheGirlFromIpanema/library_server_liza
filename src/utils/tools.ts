@@ -1,4 +1,4 @@
-import {BookDto, BookGenres, BookStatus} from "../model/Book.ts";
+import {Book, BookDto, BookGenres, BookStatus} from "../model/Book.ts";
 import { v4 as uuidv4 } from 'uuid';
 import {HttpError} from "../errorHandler/HttpError.js";
 
@@ -26,4 +26,34 @@ export const convertBookDtoToBook = (dto: BookDto) => {
         status: BookStatus.ON_STOCK,
         pickList: []
     }
+}
+
+export const fromSqlDocToArray = (doc: any[]): Book[] => {
+    const books: Book[] = [];
+
+    for (const item of doc) {
+        let book = books.find(b => b.id === item.book_id);
+
+        if (!book) {
+            book = {
+                id: item.book_id,
+                title: item.title,
+                author: item.author,
+                genre: item.genre,
+                status: item.status,
+                pickList: []
+            };
+            books.push(book);
+        }
+
+        if (item.reader_id) {
+            book.pickList.push({
+                reader: item.reader_name,
+                pick_date: item.pick_date,
+                return_date: item.return_date
+            });
+        }
+    }
+
+    return books;
 }

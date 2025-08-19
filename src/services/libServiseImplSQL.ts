@@ -4,6 +4,7 @@ import {pool} from "../config/libConfig.js";
 import {HttpError} from "../errorHandler/HttpError.js";
 import { v4 as uuidv4 } from 'uuid';
 import {User} from "../model/User.js";
+import {fromSqlDocToArray} from "../utils/tools.js";
 
 export class LibServiceImplSQL implements LibService {
 
@@ -16,14 +17,21 @@ export class LibServiceImplSQL implements LibService {
     }
 
     async getAllBooks(): Promise<Book[]> {
-        const [result] = await pool.query('SELECT * FROM books');
-        // console.log(result);
-        return Promise.resolve(result as Book[]);
+        const [result] = await pool.query(`SELECT b.id AS book_id, b.title, b.author, b.genre, b.status,
+        r.id AS reader_id, r.name AS reader_name, br.pick_date, br.return_date 
+        FROM books b LEFT JOIN books_readers br ON b.id = br.book_id
+        LEFT JOIN readers r ON r.id = br.reader_id`);
+
+        return Promise.resolve(fromSqlDocToArray(result as any[]));
     }
 
     async getBooksByGenre(genre: BookGenres): Promise<Book[]> {
-        const [result] = await pool.query('SELECT * FROM books WHERE genre = ?', [genre]);
-        return Promise.resolve(result as Book[]);
+        const [result] = await pool.query(`SELECT b.id AS book_id, b.title, b.author, b.genre, b.status,
+        r.id AS reader_id, r.name AS reader_name, br.pick_date, br.return_date FROM books b
+        LEFT JOIN books_readers br ON b.id = br.book_id LEFT JOIN readers r ON r.id = br.reader_id 
+        WHERE b.genre = ?`, [genre]);
+
+        return Promise.resolve(fromSqlDocToArray(result as any[]));
     }
 
     async pickUpBook(id: string, reader: string): Promise<void> {
@@ -78,8 +86,13 @@ export class LibServiceImplSQL implements LibService {
     }
 
     async getBooksByGenreAndStatus(genre: BookGenres, status: BookStatus): Promise<Book[]> {
-        const [result] = await pool.query('SELECT * FROM books WHERE genre = ? AND status = ?', [genre,status]);
-        return Promise.resolve(result as Book[]);
+        const [result] = await pool.query(`SELECT  b.id AS book_id, b.title, b.author, b.genre, b.status,
+        r.id AS reader_id, r.name AS reader_name, br.pick_date, br.return_date
+        FROM books b LEFT JOIN books_readers br ON b.id = br.book_id
+        LEFT JOIN readers r ON r.id = br.reader_id
+        WHERE b.genre = ? AND b.status = ?`, [genre, status]);
+
+        return Promise.resolve(fromSqlDocToArray(result as any[]));
     }
 }
 
