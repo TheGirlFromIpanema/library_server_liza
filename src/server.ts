@@ -5,6 +5,7 @@ import {errorHandler} from "./errorHandler/errorHandler.ts";
 import morgan from "morgan";
 import * as fs from "node:fs";
 import dotenv from "dotenv";
+import {accountRouter} from "./routes/accountRouter.js";
 
 export const launchServer = () => {
     //=====load environments======
@@ -19,7 +20,7 @@ export const launchServer = () => {
     app.use(morgan('combined', {stream: logStream}));
 
     //=============Router=============
-
+    app.use('/accounts', accountRouter)
     app.use('/api', libRouter);
 
     app.use((req, res) => {

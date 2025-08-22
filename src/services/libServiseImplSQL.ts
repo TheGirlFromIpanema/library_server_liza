@@ -21,7 +21,7 @@ export class LibServiceImplSQL implements LibService {
         r.id AS reader_id, r.name AS reader_name, br.pick_date, br.return_date 
         FROM books b LEFT JOIN books_readers br ON b.id = br.book_id
         LEFT JOIN readers r ON r.id = br.reader_id`);
-
+        //console.log(result);
         return Promise.resolve(fromSqlDocToArray(result as any[]));
     }
 
@@ -55,7 +55,7 @@ export class LibServiceImplSQL implements LibService {
             }
             await pool.query('INSERT INTO books_readers (book_id, reader_id, pick_date) VALUES(?,?,?)',
                 [id, userID, new Date()]);
-            await pool.query('UPDATE books SET status = "on_hand" WHERE id = ?', [id]);
+            await pool.query('UPDATE books SET status = ? WHERE id = ?', ["on_hand",id]);
         } else
             throw new HttpError(400, "Book not found");
     }
@@ -80,7 +80,7 @@ export class LibServiceImplSQL implements LibService {
                 throw new HttpError(409, "Book already on stock");
             await pool.query('UPDATE books_readers SET return_date = ? WHERE book_id = ?',
                 [new Date(), id]);
-            await pool.query('UPDATE books SET status = "on_stock" WHERE id = ?', [id]);
+            await pool.query('UPDATE books SET status = ? WHERE id = ?', ["on_stock",id]);
         } else
             throw new HttpError(400, "Book not found");
     }
