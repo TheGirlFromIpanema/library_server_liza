@@ -1,9 +1,9 @@
 import {Response, Request} from "express";
 import {Reader, ReaderDto} from "../model/Reader.js";
-import {convertReaderDtoToReader} from "../utils/tools.js";
 import {accountServiceMongo} from "../services/AccountServiceImplMongo.js";
 import {HttpError} from "../errorHandler/HttpError.js";
 import bcrypt from "bcryptjs";
+import {checkReaderId, convertReaderDtoToReader} from "../utils/tools.js";
 
 
 export const removeAccount = async (req: Request, res: Response) => {
@@ -35,9 +35,3 @@ export const addAccount = async (req: Request, res: Response) => {
     res.status(201).send();
 }
 
-const checkReaderId = (id: string | undefined) => {
-    if (!id) throw new HttpError(400, "No ID in request");
-    const _id = parseInt(id as string);
-    if (!_id) throw new HttpError(400, "ID must be a number");
-    return _id;
-}

@@ -72,3 +72,10 @@ export const convertReaderDtoToReader = (dto:ReaderDto):Reader => {
         passHash: hash
     }
 }
+
+export const checkReaderId = (id: string | undefined) => {
+    if (!id) throw new HttpError(400, "No ID in request");
+    const _id = parseInt(id as string);
+    if (!_id) throw new HttpError(400, "ID must be a number");
+    return _id;
+}
