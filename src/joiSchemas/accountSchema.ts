@@ -13,3 +13,9 @@ export const ChangePassDtoSchema = Joi.object({
     oldPassword: Joi.string().alphanum().min(8).required(),
     newPassword: Joi.string().alphanum().min(8).required(),
 })
+
+export const ChangeInfoDtoSchema = Joi.object({
+    id:Joi.number().positive().max(999999999).min(100000000).required(),
+    field: Joi.string().alphanum().min(3).required(),
+    newData: Joi.string().required(),
+})

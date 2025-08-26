@@ -8,6 +8,308 @@
 	},
 	"item": [
 		{
+			"name": "Readers",
+			"item": [
+				{
+					"name": "addReader",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 123456789,\r\n    \"userName\": \"Mike\",\r\n    \"email\": \"mile@gmail.com\",\r\n    \"password\": \"111222333\",\r\n    \"birthdate\": \"1990-03-22\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3900/accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3900",
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetReaderById",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "111222333",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "123456789",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3900/accounts/reader_id?id=123456789",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3900",
+							"path": [
+								"accounts",
+								"reader_id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "123456789"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "111222333",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "123456789",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"123456789\",\r\n    \"oldPassword\": \"111222333\",\r\n    \"newPassword\": \"333222111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3900/accounts/password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3900",
+							"path": [
+								"accounts",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteReader",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "333222111",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "123456789",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"123456789\",\r\n    \"oldPassword\": \"111222333\",\r\n    \"newPassword\": \"333222111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3900/accounts?id=123456789",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3900",
+							"path": [
+								"accounts"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "123456789"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changeEmail",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "111222333",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "123456789",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"123456789\",\r\n    \"field\": \"email\",\r\n    \"newData\": \"NewMike@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3900/accounts/readerInfo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3900",
+							"path": [
+								"accounts",
+								"readerInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changeUserName",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "111222333",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "123456789",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"123456789\",\r\n    \"field\": \"username\",\r\n    \"newData\": \"Mike22\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3900/accounts/readerInfo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3900",
+							"path": [
+								"accounts",
+								"readerInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changeBirthDate",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "111222333",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "123456789",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"123456789\",\r\n    \"field\": \"birthdate\",\r\n    \"newData\": \"1993-02-02\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3900/accounts/readerInfo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3900",
+							"path": [
+								"accounts",
+								"readerInfo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "AddBook",
 			"request": {
 				"auth": {
