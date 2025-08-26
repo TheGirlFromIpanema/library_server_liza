@@ -14,12 +14,12 @@ accountRouter.get('/reader_id', async (req: AuthRequest, res: Response) => {
     throw new HttpError(403, "")
 });
 accountRouter.patch('/password', bodyValidation(ChangePassDtoSchema), async (req: AuthRequest, res: Response) => {
-    if (req.roles?.includes(Roles.USER))
+    if (req.roles?.includes(Roles.USER ) || req.roles?.includes(Roles.ADMIN ) )
         await controller.changePassword(req, res);
     throw new HttpError(403, "")
 });
 accountRouter.patch('/readerInfo', bodyValidation(ChangeInfoDtoSchema), async (req: AuthRequest, res: Response) => {
-    if (req.roles?.includes(Roles.USER))
+    if (req.roles?.includes(Roles.USER ) || req.roles?.includes(Roles.ADMIN ) )
         await controller.changeUserInfo(req, res);
     throw new HttpError(403, "")
 });
