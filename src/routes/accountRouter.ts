@@ -9,7 +9,7 @@ export const accountRouter = express.Router();
 
 accountRouter.post('/', bodyValidation(ReaderDtoSchema), controller.addAccount);
 accountRouter.get('/reader_id', async (req: AuthRequest, res: Response) => {
-    if (req.roles?.includes(Roles.USER))
+    if (req.roles?.includes(Roles.USER ) || req.roles?.includes(Roles.ADMIN ) )
         await controller.getAccountById(req, res);
     throw new HttpError(403, "")
 });
