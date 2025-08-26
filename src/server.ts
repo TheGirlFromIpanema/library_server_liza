@@ -14,7 +14,7 @@ export const launchServer = () => {
     dotenv.config();
     // console.log(process.env)
     const app = express();
-    app.listen(process.env.PORT, () => console.log(`Server runs at http://localhost:${process.env.PORT}`));
+    app.listen(PORT, () => console.log(`Server runs at http://localhost:${PORT}`));
     const logStream = fs.createWriteStream('logs.txt', {flags: "a"});
     //=========Middleware=============
     app.use(authenticate(accountServiceMongo));

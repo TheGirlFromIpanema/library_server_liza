@@ -5,7 +5,6 @@ import {ChangePassDtoSchema, ReaderDtoSchema} from "../joiSchemas/accountSchema.
 import {AuthRequest, Roles} from "../utils/libTypes.js";
 import {HttpError} from "../errorHandler/HttpError.js";
 
-
 export const  accountRouter = express.Router();
 
 accountRouter.post('/',bodyValidation(ReaderDtoSchema),controller.addAccount);

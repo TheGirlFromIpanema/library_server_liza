@@ -5,8 +5,8 @@ import {Book, BookDto, BookGenres} from "../model/Book.ts";
 import {HttpError} from "../errorHandler/HttpError.ts";
 import {convertBookDtoToBook, getStatus, getGenre} from "../utils/tools.js";
 import {bookDtoSchema, pickRemoveSchema} from "../joiSchemas/bookSchema.js";
-//import {libServiceMongo as service} from "../services/libServiceImplMongo.js";
-import {libServiceSql as service} from "../services/libServiseImplSQL.js";
+import {libServiceMongo as service} from "../services/libServiceImplMongo.js";
+//import {libServiceSql as service} from "../services/libServiseImplSQL.js";
 
 
 export class BookController {

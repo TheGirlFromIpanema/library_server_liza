@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {HttpError} from "../errorHandler/HttpError.js";
 import {Reader, ReaderDto} from "../model/Reader.js";
 import bcrypt from "bcryptjs";
+import {Roles} from "./libTypes.js";
 
 export function getGenre(genre: string) {
     const bookGenre = Object.values(BookGenres).find(v => v === genre)
@@ -69,7 +70,8 @@ export const convertReaderDtoToReader = (dto:ReaderDto):Reader => {
         userName: dto.userName,
         email: dto.email,
         birthdate: dto.birthdate,
-        passHash: hash
+        passHash: hash,
+        role: Roles.USER
     }
 }
 

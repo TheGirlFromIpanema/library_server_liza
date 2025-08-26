@@ -9,7 +9,7 @@ import {AuthRequest, Roles} from "../utils/libTypes.js";
 async function getBasicAuth(authHeader: string, service: AccountService, req: AuthRequest, res:Response) {
     const BASIC = "Basic ";
     const auth = Buffer.from(authHeader.substring(BASIC.length), "base64").toString("ascii");
-    console.log(auth);
+    //console.log(auth);
     try {
         const [id, password] = auth.split(":");
         const _id = checkReaderId(id);
@@ -17,7 +17,7 @@ async function getBasicAuth(authHeader: string, service: AccountService, req: Au
         if (bcrypt.compareSync(password, account.passHash)) {
             req.userId = account._id;
             req.userName = account.userName;
-            req.roles = [Roles.USER];
+            req.roles = [account.role];
             console.log("AUTHENTICATED")
         } else {
             console.log("NOT AUTHENTICATED")
@@ -33,7 +33,7 @@ async function getBasicAuth(authHeader: string, service: AccountService, req: Au
 export const authenticate = (service: AccountService)=> {
     return async (req: Request, res: Response, next: NextFunction) => {
         const authHeader = req.header('Authorization');
-        console.log(authHeader);
+        // console.log(authHeader);
         if (authHeader)
             await getBasicAuth(authHeader, service, req, res)
         next();
