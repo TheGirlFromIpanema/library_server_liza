@@ -14,4 +14,5 @@ accountRouter.get('/reader_id', async (req: AuthRequest, res: Response) => {
     throw new HttpError(403, "")
 });
 accountRouter.patch('/password', bodyValidation(ChangePassDtoSchema), controller.changePassword);
+accountRouter.patch('/readerInfo', bodyValidation(ChangePassDtoSchema), controller.changeUserInfo);
 accountRouter.delete('/', controller.removeAccount)

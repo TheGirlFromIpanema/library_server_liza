@@ -5,6 +5,14 @@ import {HttpError} from "../errorHandler/HttpError.js";
 import bcrypt from "bcryptjs";
 import {checkReaderId, convertReaderDtoToReader} from "../utils/tools.js";
 
+export const changeUserInfo = async (req: Request, res: Response) => {
+    const {id, field, newData} = req.body;
+
+    const _id = checkReaderId(id);
+    await accountServiceMongo.changeUserInfo(_id, field, newData);
+    res.send("Data changed")
+}
+
 
 export const removeAccount = async (req: Request, res: Response) => {
     const {id} = req.query;

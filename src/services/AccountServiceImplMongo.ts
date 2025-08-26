@@ -15,12 +15,12 @@ export class AccountServiceImplMongo implements AccountService{
     }
 
     async changePassword(id: number, oldPassword: string, newPassword:string): Promise<void> {
-        console.log(id, oldPassword, newPassword)
+        // console.log(id, oldPassword, newPassword)
         const account = await ReaderModel.findById(id);
-        console.log(account)
+        // console.log(account)
         if (!account) throw new HttpError(404, "Account not found");
         const checkPass = bcrypt.compareSync(oldPassword, account.passHash);
-        console.log(checkPass)
+        // console.log(checkPass)
         if(!checkPass) throw new HttpError(403, "");
         else{
             const newHash = bcrypt.hashSync(newPassword, 10);
@@ -41,6 +41,23 @@ export class AccountServiceImplMongo implements AccountService{
         return result as unknown as Reader;
     }
 
+    async changeUserInfo(id: number, field: any, newData: any) {
+        const account = await ReaderModel.findById(id);
+        if (!account) throw new HttpError(404, "Account not found");
+        switch (field) {
+            case "username":
+                account.userName = newData;
+                break;
+            case "email":
+                account.email = newData;
+                break;
+            case "birthdate":
+                account.birthdate = newData;
+                break;
+            default: break;
+        }
+        await account.save();
+    }
 }
 
 export const accountServiceMongo = new AccountServiceImplMongo();
