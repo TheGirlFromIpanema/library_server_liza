@@ -15,7 +15,7 @@ export const pool = mysql.createPool({
 })
 
 export const SKIP_ROUTES = [
-    "POST/accounts", "GET/api/books", "GET/api/books/genres", "GET/api/books/gen_st"
+    "POST/accounts", "GET/api/books", "GET/api/books/genres", "GET/api/books/gen_st", "GET/api/books/booksByUser"
 ]
 
 export const PATH_ROUTES = {

@@ -8,9 +8,13 @@ export const bookDtoSchema = joi.object({
     language: joi.string(),
 })
 
-export const pickRemoveSchema = joi.object({
+export const pickBookSchema = joi.object({
     id: joi.string().required(),
     reader: joi.string().required(),
+})
+
+export const returnBookSchema = joi.object({
+    id: joi.string().required(),
 })
 
 export const bookGenreQueryValidation = joi.object({
@@ -21,3 +25,7 @@ export const bookGenreQueryValidation = joi.object({
 export const bookRemoveQueryValidation = joi.object({
         bookId: joi.string().required(),
     })
+
+export const bookByUserIdQueryValidation = joi.object({
+   userId: joi.string().required(),
+})

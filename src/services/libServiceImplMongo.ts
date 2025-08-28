@@ -43,10 +43,13 @@ export class LibServiceImplMongo implements LibService {
         if (book.status !== BookStatus.ON_STOCK)
             throw new HttpError(409, "Book just on hand or removed");
         const reader = await accountServiceMongo.getAccountById(readerId);
-        if (!reader)
-            throw new HttpError(404, `Account with id: ${readerId} not found`);
         book.status = BookStatus.ON_HAND;
-        book.pickList.push({reader: reader.userName, readerId, pick_date: new Date().toDateString(), return_date: null});
+        book.pickList.push({
+            reader: reader.userName,
+            readerId,
+            pick_date: new Date().toDateString(),
+            return_date: null
+        });
         book.save();
     }
 
@@ -82,6 +85,12 @@ export class LibServiceImplMongo implements LibService {
     }
 
 
+    async getBooksByUserId(readerId: number) {
+        await accountServiceMongo.getAccountById(readerId);
+        const result = await BookMongooseModel.find(
+            {"pickList.readerId": readerId}, {title: 1, _id: 0}).exec();
+        return result.map(book => book.title);
+    }
 }
 
 export const libServiceMongo = new LibServiceImplMongo();

@@ -4,7 +4,7 @@ import {Request, Response} from "express";
 import {Book, BookDto, BookGenres} from "../model/Book.ts";
 import {HttpError} from "../errorHandler/HttpError.ts";
 import {convertBookDtoToBook, getStatus, getGenre, checkReaderId} from "../utils/tools.js";
-import {bookDtoSchema, pickRemoveSchema} from "../joiSchemas/bookSchema.js";
+import {bookDtoSchema, pickBookSchema, returnBookSchema} from "../joiSchemas/bookSchema.js";
 import {libServiceMongo as service} from "../services/libServiceImplMongo.js";
 //import {libServiceSql as service} from "../services/libServiseImplSQL.js";
 
@@ -51,7 +51,7 @@ export class BookController {
     async pickUpBook(req: Request, res: Response) {
         const body = req.body;
         if (!body) throw new HttpError(409, 'Bad request: Missing Body!')
-        const {error} = pickRemoveSchema.validate(body);
+        const {error} = pickBookSchema.validate(body);
         if (error) throw new HttpError(400, error.message)
         const readerID = checkReaderId(body.reader);
         await service.pickUpBook(body.id, readerID);
@@ -67,10 +67,15 @@ export class BookController {
     async returnBook(req: Request, res: Response) {
         const body = req.body;
         if (!body) throw new HttpError(409, 'Bad request: Missing Body!')
-        const {error} = pickRemoveSchema.validate(body);
+        const {error} = returnBookSchema.validate(body);
         if (error) throw new HttpError(400, error.message)
         await service.returnBook(body.id);
         res.send("Book successfully returned");
     }
 
+    async getBooksByUser(req: Request, res: Response) {
+        const id = checkReaderId(req.query.userId as string);
+        const result = await service.getBooksByUserId(id);
+        return res.json(result);
+    }
 }
