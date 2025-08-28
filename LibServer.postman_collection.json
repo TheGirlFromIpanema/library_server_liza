@@ -89,13 +89,13 @@
 							"type": "basic",
 							"basic": [
 								{
-									"key": "password",
-									"value": "111222333",
+									"key": "username",
+									"value": "123456799",
 									"type": "string"
 								},
 								{
-									"key": "username",
-									"value": "123456789",
+									"key": "password",
+									"value": "333222111",
 									"type": "string"
 								}
 							]
@@ -104,7 +104,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"123456789\",\r\n    \"oldPassword\": \"111222333\",\r\n    \"newPassword\": \"333222111\"\r\n}",
+							"raw": "{\r\n    \"id\": \"123456799\",\r\n    \"oldPassword\": \"333222111\",\r\n    \"newPassword\": \"111222333\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -133,13 +133,13 @@
 							"type": "basic",
 							"basic": [
 								{
-									"key": "password",
-									"value": "333222111",
+									"key": "username",
+									"value": "100000000",
 									"type": "string"
 								},
 								{
-									"key": "username",
-									"value": "123456789",
+									"key": "password",
+									"value": "123456789.com",
 									"type": "string"
 								}
 							]
@@ -183,7 +183,7 @@
 							"basic": [
 								{
 									"key": "password",
-									"value": "111222333",
+									"value": "333222111",
 									"type": "string"
 								},
 								{
@@ -227,7 +227,7 @@
 							"basic": [
 								{
 									"key": "password",
-									"value": "111222333",
+									"value": "333222111",
 									"type": "string"
 								},
 								{
@@ -306,6 +306,56 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "PutRole",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "100000000",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "123456789.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n    [\"user\",\"admin\", \"librarian\"]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3900/accounts/roles?id=123456789",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3900",
+							"path": [
+								"accounts",
+								"roles"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "123456789"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -313,7 +363,19 @@
 			"name": "AddBook",
 			"request": {
 				"auth": {
-					"type": "noauth"
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "333222111",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "123456789",
+							"type": "string"
+						}
+					]
 				},
 				"method": "POST",
 				"header": [],
@@ -374,11 +436,26 @@
 		{
 			"name": "PickUpBook",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "333222111",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "123456789",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"reader\": \"Tom\",\r\n    \"id\": \"c54da81c-62b9-4dbe-98f2-e1e9d52c4150\"\r\n}",
+					"raw": "{\r\n    \"reader\": \"123456799\",\r\n    \"id\": \"398d8cad-a24a-45c7-be4e-0472e4f520e8\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -435,13 +512,25 @@
 			"name": "ReturnBook",
 			"request": {
 				"auth": {
-					"type": "noauth"
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "333222111",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "123456789",
+							"type": "string"
+						}
+					]
 				},
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"reader\": \"Tom\",\r\n    \"id\": \"c54da81c-62b9-4dbe-98f2-e1e9d52c4150\"\r\n}",
+					"raw": "{\r\n    \"id\": \"028e8a89-61d7-41cd-999d-9edcfa660473\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -468,12 +557,24 @@
 			"name": "RemoveBook",
 			"request": {
 				"auth": {
-					"type": "noauth"
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "333222111",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "123456789",
+							"type": "string"
+						}
+					]
 				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3900/api/books?bookId=730fdba5-c800-43c5-a7a0-c8f1cd9222a8",
+					"raw": "http://localhost:3900/api/books?bookId=399a7ee1-552e-4e57-abc7-37882fa963cf",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -486,7 +587,7 @@
 					"query": [
 						{
 							"key": "bookId",
-							"value": "730fdba5-c800-43c5-a7a0-c8f1cd9222a8"
+							"value": "399a7ee1-552e-4e57-abc7-37882fa963cf"
 						}
 					]
 				}
@@ -497,7 +598,19 @@
 			"name": "AddBook1",
 			"request": {
 				"auth": {
-					"type": "noauth"
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "333222111",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "123456789",
+							"type": "string"
+						}
+					]
 				},
 				"method": "POST",
 				"header": [],
@@ -553,6 +666,36 @@
 						{
 							"key": "status",
 							"value": "on_stock"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBooksByUserId",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3900/api/books/booksByUser?userId=123456789",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3900",
+					"path": [
+						"api",
+						"books",
+						"booksByUser"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "123456789"
 						}
 					]
 				}
