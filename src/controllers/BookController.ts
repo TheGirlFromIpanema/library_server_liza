@@ -3,7 +3,7 @@ import {LibServiceImplEmbedded} from "../services/libServiceImplEmbedded.ts";
 import {Request, Response} from "express";
 import {Book, BookDto, BookGenres} from "../model/Book.ts";
 import {HttpError} from "../errorHandler/HttpError.ts";
-import {convertBookDtoToBook, getStatus, getGenre} from "../utils/tools.js";
+import {convertBookDtoToBook, getStatus, getGenre, checkReaderId} from "../utils/tools.js";
 import {bookDtoSchema, pickRemoveSchema} from "../joiSchemas/bookSchema.js";
 import {libServiceMongo as service} from "../services/libServiceImplMongo.js";
 //import {libServiceSql as service} from "../services/libServiseImplSQL.js";
@@ -53,9 +53,8 @@ export class BookController {
         if (!body) throw new HttpError(409, 'Bad request: Missing Body!')
         const {error} = pickRemoveSchema.validate(body);
         if (error) throw new HttpError(400, error.message)
-        if (!body.reader)
-            body.reader = "Anonym";
-        await service.pickUpBook(body.id, body.reader);
+        const readerID = checkReaderId(body.reader);
+        await service.pickUpBook(body.id, readerID);
         res.send("Book successfully picked");
     }
 

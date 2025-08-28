@@ -2,6 +2,7 @@ import {LibService} from "./libService.js";
 import {Book, BookGenres, BookStatus} from "../model/Book.js";
 import {BookMongooseModel} from "../model/BookMongooseModel.js";
 import {HttpError} from "../errorHandler/HttpError.js";
+import {accountServiceMongo} from "./AccountServiceImplMongo.ts";
 
 
 export class LibServiceImplMongo implements LibService {
@@ -35,20 +36,31 @@ export class LibServiceImplMongo implements LibService {
         return Promise.resolve(result);
     }
 
-    async pickUpBook(id: string, reader: string): Promise<void> {
+    async pickUpBook(id: string, readerId: number): Promise<void> {
         const book = await BookMongooseModel.findOne({_id: id}).exec();
         if (!book)
             throw new HttpError(404, `Book with id: ${id} not found`);
         if (book.status !== BookStatus.ON_STOCK)
-            throw new HttpError(409, "Book just on hand");
+            throw new HttpError(409, "Book just on hand or removed");
+        const reader = await accountServiceMongo.getAccountById(readerId);
+        if (!reader)
+            throw new HttpError(404, `Account with id: ${readerId} not found`);
         book.status = BookStatus.ON_HAND;
-        book.pickList.push({reader, pick_date: new Date().toDateString(), return_date: null});
-
+        book.pickList.push({reader: reader.userName, readerId, pick_date: new Date().toDateString(), return_date: null});
         book.save();
     }
 
-    removeBook(id: string): Promise<Book> {
-        throw ""
+    async removeBook(id: string): Promise<Book> {
+        const book = await BookMongooseModel.findOne({_id: id}).exec();
+        if (!book)
+            throw new HttpError(404, `Book with id: ${id} not found`);
+        if (book.status === BookStatus.ON_HAND)
+            throw new HttpError(409, "Book on hand, you can't remove book");
+        if (book.status === BookStatus.REMOVED)
+            throw new HttpError(409, "Book already removed");
+        book.status = BookStatus.REMOVED;
+        book.save();
+        return Promise.resolve(book as Book);
     }
 
     async returnBook(id: string): Promise<void> {

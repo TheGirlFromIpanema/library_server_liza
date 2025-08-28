@@ -10,7 +10,7 @@ export const bookDtoSchema = joi.object({
 
 export const pickRemoveSchema = joi.object({
     id: joi.string().required(),
-    reader: joi.string(),
+    reader: joi.string().required(),
 })
 
 export const bookGenreQueryValidation = joi.object({

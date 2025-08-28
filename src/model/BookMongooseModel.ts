@@ -4,6 +4,7 @@ import {BookGenres, BookStatus} from "./Book.js";
 
 const PickListSchema = new mongoose.Schema({
     reader: {type:String, required:true},
+    readerId: {type:Number, required:true},
     pick_date: {type:String, required: true},
     return_date:{type:String, default:null}
 }, {
