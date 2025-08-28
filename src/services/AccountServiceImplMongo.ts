@@ -3,6 +3,7 @@ import {Reader} from "../model/Reader.js";
 import {ReaderModel} from "../model/ReaderMongooseModel.js";
 import {HttpError} from "../errorHandler/HttpError.js";
 import bcrypt from "bcryptjs";
+import {Roles} from "../utils/libTypes.js";
 
 
 export class AccountServiceImplMongo implements AccountService{
@@ -57,6 +58,13 @@ export class AccountServiceImplMongo implements AccountService{
             default: break;
         }
         await account.save();
+    }
+
+    async changeRoles(id: number, newRoles: Roles[]): Promise<Reader> {
+        const result =
+            await ReaderModel.findByIdAndUpdate(id, {roles : newRoles},{new:true})
+        if(!result) throw new HttpError(404, "Account not found");
+        return result as unknown as Reader;
     }
 }
 

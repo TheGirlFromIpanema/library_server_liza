@@ -10,23 +10,28 @@ async function getBasicAuth(authHeader: string, service: AccountService, req: Au
     const BASIC = "Basic ";
     const auth = Buffer.from(authHeader.substring(BASIC.length), "base64").toString("ascii");
     //console.log(auth);
-    try {
-        const [id, password] = auth.split(":");
-        const _id = checkReaderId(id);
-        const account = await service.getAccountById(_id);
-        if (bcrypt.compareSync(password, account.passHash)) {
-            req.userId = account._id;
-            req.userName = account.userName;
-            req.roles = [account.role];
-            console.log("AUTHENTICATED")
-        } else {
-            console.log("NOT AUTHENTICATED")
-           // res.status(401).send("")
+    const [id, password] = auth.split(":");
+    const _id = checkReaderId(id);
+    console.log(process.env.OWNER!)
+    console.log(process.env.OWNER_PASS)
+    if (_id == (+process.env.OWNER!) && password === process.env.OWNER_PASS) {
+        req.userId = 10000000;
+        req.roles = [Roles.SUPERVISOR];
+    } else {
+        try {
+            const account = await service.getAccountById(_id);
+            if (bcrypt.compareSync(password, account.passHash)) {
+                req.userId = account._id;
+                req.userName = account.userName;
+                req.roles = account.roles;
+                console.log("AUTHENTICATED")
+            } else {
+                console.log("NOT AUTHENTICATED")
+
+            }
+        } catch (e) {
+            console.log("NOT AUTHENTICATED because Internal Http Errors")
         }
-    } catch (e) {
-        console.log("NOT AUTHENTICATED because Internal Http Errors")
-        // console.log(e);
-        // res.status(401).send("")
     }
 }
 

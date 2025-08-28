@@ -71,7 +71,7 @@ export const convertReaderDtoToReader = (dto:ReaderDto):Reader => {
         email: dto.email,
         birthdate: dto.birthdate,
         passHash: hash,
-        role: Roles.ADMIN
+        roles: [Roles.USER]
     }
 }
 

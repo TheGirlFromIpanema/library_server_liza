@@ -14,6 +14,6 @@ export type Reader = {
     email: string,
     birthdate: string,
     passHash: string,
-    role: Roles,
+    roles: Roles[],
 
 }
