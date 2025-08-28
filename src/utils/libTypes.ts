@@ -10,5 +10,6 @@ export enum Roles {
     USER = "user",
     ADMIN = "admin",
     GUEST = "guest",
-    SUPERVISOR = "super"
+    SUPERVISOR = "super",
+    LIBRARIAN = "librarian",
 }

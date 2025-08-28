@@ -15,15 +15,19 @@ export const pool = mysql.createPool({
 })
 
 export const SKIP_ROUTES = [
-    "POST/accounts", "GET/api/books"
+    "POST/accounts", "GET/api/books", "GET/api/books/genres", "GET/api/books/gen_st"
 ]
 
 export const PATH_ROUTES = {
-    "GET/accounts/reader_id" : [Roles.USER, Roles.ADMIN],
-    "PATCH/accounts/password" : [Roles.USER],
-    "DELETE/accounts" : [Roles.SUPERVISOR],
-    "PATCH/accounts/readerInfo" : [Roles.USER,Roles.ADMIN],
-    "PUT/accounts/roles" : [Roles.SUPERVISOR],
+    "GET/accounts/reader_id": [Roles.USER, Roles.ADMIN],
+    "PATCH/accounts/password": [Roles.USER],
+    "DELETE/accounts": [Roles.SUPERVISOR],
+    "PATCH/accounts/readerInfo": [Roles.USER, Roles.ADMIN],
+    "PUT/accounts/roles": [Roles.SUPERVISOR],
+    "POST/api/books": [Roles.LIBRARIAN, Roles.ADMIN],
+    "PUT/api/books/pickUp": [Roles.LIBRARIAN],
+    "PUT/api/books/return": [Roles.USER, Roles.LIBRARIAN, Roles.ADMIN],
+    "DELETE/api/books": [Roles.ADMIN, Roles.LIBRARIAN],
 }
 
 export const CHECK_ID_ROUTES = [
