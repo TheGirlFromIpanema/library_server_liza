@@ -3,12 +3,13 @@ import {Reader, ReaderDto} from "../model/Reader.js";
 import {accountServiceMongo} from "../services/AccountServiceImplMongo.js";
 import {HttpError} from "../errorHandler/HttpError.js";
 import bcrypt from "bcryptjs";
-import {checkReaderId, convertReaderDtoToReader} from "../utils/tools.js";
-import {Roles} from "../utils/libTypes.js";
+import {checkReaderId, convertReaderDtoToReader, getRole} from "../utils/tools.js";
+import {AuthRequest, Roles} from "../utils/libTypes.js";
 
 export const changeRoles = async (req: Request, res: Response) => {
     const id = checkReaderId(req.query.id as string);
     const newRoles = req.body as Roles[];
+    newRoles.map((role) => {getRole(role)})
     const readerWithNewRoles = await accountServiceMongo.changeRoles(id, newRoles);
     res.json(readerWithNewRoles)
 }
@@ -29,10 +30,12 @@ export const removeAccount = async (req: Request, res: Response) => {
     res.json(account)
 }
 
-export const changePassword = async (req: Request, res: Response) => {
+export const changePassword = async (req: AuthRequest, res: Response) => {
     const {id, oldPassword, newPassword} = req.body;
 
     const _id = checkReaderId(id);
+    if (req.userId !== _id)
+        throw new HttpError(400, "You can modify only your own password");
     await accountServiceMongo.changePassword(_id, oldPassword, newPassword);
     res.send("Password changed")
 }

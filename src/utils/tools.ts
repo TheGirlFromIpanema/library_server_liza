@@ -13,6 +13,14 @@ export function getGenre(genre: string) {
         return bookGenre;
 }
 
+export function getRole(role: string) {
+    const readerRole = Object.values(Roles).find(v => v === role)
+    if (!readerRole)
+        throw new HttpError(400, "Wrong role");
+    else
+        return readerRole;
+}
+
 export function getStatus(status: string) {
     const bookStatus = Object.values(BookStatus).find(v => v === status);
 
