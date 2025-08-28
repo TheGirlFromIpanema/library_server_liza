@@ -35,7 +35,7 @@ export const changePassword = async (req: AuthRequest, res: Response) => {
 
     const _id = checkReaderId(id);
     if (req.userId !== _id)
-        throw new HttpError(400, "You can modify only your own password");
+        throw new HttpError(403, "You can modify only your own password");
     await accountServiceMongo.changePassword(_id, oldPassword, newPassword);
     res.send("Password changed")
 }
