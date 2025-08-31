@@ -3,27 +3,28 @@ import {Reader} from "../model/Reader.js";
 import {ReaderModel} from "../model/ReaderMongooseModel.js";
 import {HttpError} from "../errorHandler/HttpError.js";
 import bcrypt from "bcryptjs";
-import {Roles} from "../utils/libTypes.js";
+import {LoginPassType, Roles} from "../utils/libTypes.js";
+import {getJWT} from "../utils/tools.js";
 
 
-export class AccountServiceImplMongo implements AccountService{
+export class AccountServiceImplMongo implements AccountService {
 
     async addAccount(reader: Reader): Promise<void> {
         const temp = await ReaderModel.findById(reader._id);
-        if(temp) throw new HttpError(409, "Reader already exists");
+        if (temp) throw new HttpError(409, "Reader already exists");
         const readerDoc = new ReaderModel(reader);
         await readerDoc.save();
     }
 
-    async changePassword(id: number, oldPassword: string, newPassword:string): Promise<void> {
+    async changePassword(id: number, oldPassword: string, newPassword: string): Promise<void> {
         // console.log(id, oldPassword, newPassword)
         const account = await ReaderModel.findById(id);
         // console.log(account)
         if (!account) throw new HttpError(404, "Account not found");
         const checkPass = bcrypt.compareSync(oldPassword, account.passHash);
         // console.log(checkPass)
-        if(!checkPass) throw new HttpError(403, "");
-        else{
+        if (!checkPass) throw new HttpError(403, "");
+        else {
             const newHash = bcrypt.hashSync(newPassword, 10);
             account.passHash = newHash;
             await account.save();
@@ -32,13 +33,13 @@ export class AccountServiceImplMongo implements AccountService{
 
     async getAccountById(id: number): Promise<Reader> {
         const result = await ReaderModel.findById(id);
-        if(!result) throw new HttpError(404, "Account not found");
+        if (!result) throw new HttpError(404, "Account not found");
         return result as unknown as Reader;
     }
 
     async removeAccount(id: number): Promise<Reader> {
         const result = await ReaderModel.findByIdAndDelete(id);
-        if(!result) throw new HttpError(404, "Account not found");
+        if (!result) throw new HttpError(404, "Account not found");
         return result as unknown as Reader;
     }
 
@@ -55,16 +56,26 @@ export class AccountServiceImplMongo implements AccountService{
             case "birthdate":
                 account.birthdate = newData;
                 break;
-            default: break;
+            default:
+                break;
         }
         await account.save();
     }
 
     async changeRoles(id: number, newRoles: Roles[]): Promise<Reader> {
         const result =
-            await ReaderModel.findByIdAndUpdate(id, {roles : newRoles},{new:true})
-        if(!result) throw new HttpError(404, "Account not found");
+            await ReaderModel.findByIdAndUpdate(id, {roles: newRoles}, {new: true})
+        if (!result) throw new HttpError(404, "Account not found");
         return result as unknown as Reader;
+    }
+
+    async login(credentials: LoginPassType): Promise<string> {
+        const profile = await ReaderModel.findById(credentials.userId);
+        if (!profile || !bcrypt.compareSync(credentials.password, profile.passHash))
+            throw new HttpError(401, "Incorrect login or pass");
+
+        const token = getJWT(credentials.userId, profile.roles as Roles[]);
+        return token;
     }
 }
 

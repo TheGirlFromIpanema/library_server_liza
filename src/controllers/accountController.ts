@@ -4,7 +4,13 @@ import {accountServiceMongo} from "../services/AccountServiceImplMongo.js";
 import {HttpError} from "../errorHandler/HttpError.js";
 import bcrypt from "bcryptjs";
 import {checkReaderId, convertReaderDtoToReader, getRole} from "../utils/tools.js";
-import {AuthRequest, Roles} from "../utils/libTypes.js";
+import {AuthRequest, Roles, LoginPassType,} from "../utils/libTypes.js";
+
+
+export const login = async (req: Request, res: Response) => {
+    const result = await accountServiceMongo.login({userId: checkReaderId(req.body.id), password: req.body.password});
+    res.json(result);
+};
 
 export const changeRoles = async (req: Request, res: Response) => {
     const id = checkReaderId(req.query.id as string);

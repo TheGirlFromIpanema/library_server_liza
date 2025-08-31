@@ -1,8 +1,8 @@
 import {launchServer} from "./server.ts";
 import * as mongoose from "mongoose";
-import {MONGO_URI} from "./config/libConfig.js";
+import {configuration} from "./config/libConfig.js";
 
-mongoose.connect(MONGO_URI)
+mongoose.connect(configuration.mongoUri)
     .then(() => {
         console.log("MongoDB successfully connected")
         launchServer();

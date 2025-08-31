@@ -1,5 +1,5 @@
 import {Reader} from "../model/Reader.js";
-import {Roles} from "../utils/libTypes.js";
+import {LoginPassType, Roles} from "../utils/libTypes.js";
 
 export interface AccountService {
     addAccount: (reader: Reader) => Promise<void>;
@@ -8,4 +8,5 @@ export interface AccountService {
     changePassword: (id: number, newPassword: string, oldPassword:string) => Promise<void>;
     changeUserInfo: (id: number, field: any, newData: any) => Promise<void>;
     changeRoles: (id:number, newRoles:Roles[]) => Promise<Reader>;
+    login: (credentials:LoginPassType) => Promise<string>;
 }

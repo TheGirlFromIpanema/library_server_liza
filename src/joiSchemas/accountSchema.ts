@@ -24,3 +24,8 @@ export const ChangeInfoDtoSchema = Joi.object({
 export const ChangeRolesSchema = Joi.array<Roles[]>()
 
 export type ArraySchema = typeof ChangeRolesSchema;
+
+export const LoginSchema = Joi.object({
+    id:Joi.number().positive().max(999999999).min(100000000).required(),
+    password: Joi.string().alphanum().min(8).required()
+});

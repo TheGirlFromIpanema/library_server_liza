@@ -13,3 +13,8 @@ export enum Roles {
     SUPERVISOR = "super",
     LIBRARIAN = "librarian",
 }
+
+export interface LoginPassType {
+    userId: number,
+    password: string;
+}

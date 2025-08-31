@@ -1,0 +1,27 @@
+{
+  "port":3900,
+  "skipRoutes" : [
+    "POST/accounts",
+    "GET/api/books",
+    "GET/api/books/genres",
+    "GET/api/books/gen_st",
+    "GET/api/books/booksByUser",
+    "POST/accounts/login"
+  ],
+  "pathRoles": {
+    "GET/accounts/reader_id" : ["user", "admin"],
+    "PATCH/accounts/password" : ["user"],
+    "DELETE/accounts" : ["super"],
+    "PATCH/accounts" : ["user","admin"],
+    "PUT/accounts/roles" : ["super"],
+    "POST/api/books":["admin", "librarian"],
+    "DELETE/api/books":["admin", "librarian"],
+    "PATCH/api/books/pickUp":["librarian"],
+    "PATCH/api/books/return":["librarian", "admin", "user"]
+  },
+  "checkIdRoutes": [
+    "GET/accounts/reader_id",
+    "PATCH/accounts/password",
+    "PATCH/accounts/readerInfo"
+  ]
+}

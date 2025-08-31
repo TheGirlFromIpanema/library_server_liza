@@ -4,7 +4,7 @@ import {bodyValidation} from "../joiSchemas/bodyValidation.js";
 import {
     ChangeInfoDtoSchema,
     ChangePassDtoSchema,
-    ChangeRolesSchema,
+    ChangeRolesSchema, LoginSchema,
     ReaderDtoSchema
 } from "../joiSchemas/accountSchema.js";
 import {AuthRequest, Roles} from "../utils/libTypes.js";
@@ -18,3 +18,4 @@ accountRouter.patch('/password', bodyValidation(ChangePassDtoSchema), controller
 accountRouter.delete('/', controller.removeAccount);
 accountRouter.patch('/readerInfo', bodyValidation(ChangeInfoDtoSchema), controller.changeUserInfo);
 accountRouter.put('/roles',bodyValidation(ChangeRolesSchema),controller.changeRoles)
+accountRouter.post('/login', bodyValidation(LoginSchema), controller.login);
