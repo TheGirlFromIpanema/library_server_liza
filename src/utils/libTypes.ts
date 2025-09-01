@@ -12,6 +12,7 @@ export enum Roles {
     GUEST = "guest",
     SUPERVISOR = "super",
     LIBRARIAN = "librarian",
+    PREMIUM_USER = "premiumUser",
 }
 
 export interface LoginPassType {

@@ -13,7 +13,8 @@ export interface AppConfig {
     jwt:{
         secret:string,
         exp:string|number
-    }
+    },
+    reqLimit:number
 
 }
 
@@ -35,7 +36,8 @@ export const configuration:AppConfig = {
     jwt:{
         secret: process.env.JWT_SECRET || "super-secret",
         exp: process.env.JWT_EXP || "1h"
-    }
+    },
+    reqLimit: +process.env.REQUEST_LIMIT! || 5,
 }
 
 

@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 import {accountRouter} from "./routes/accountRouter.js";
 import {authenticate, skipRoutes} from "./middleware/authentication.js";
 import {accountServiceMongo} from "./services/AccountServiceImplMongo.js";
-import {authorize, checkAccountById} from "./middleware/authorization.js";
+import {authorize, checkAccountById, requestTimeLimit} from "./middleware/authorization.js";
 import {Roles} from "./utils/libTypes.js";
 
 export const launchServer = () => {
@@ -22,6 +22,7 @@ export const launchServer = () => {
     app.use(authenticate(accountServiceMongo));
     app.use(skipRoutes(configuration.skipRoutes));
     app.use(authorize(configuration.pathRoles as Record<string, Roles[]>));
+    app.use(requestTimeLimit());
     app.use(express.json());
     app.use(checkAccountById(configuration.checkIdRoutes));
     app.use(morgan("dev"));
